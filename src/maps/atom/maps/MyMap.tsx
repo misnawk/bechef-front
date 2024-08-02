@@ -13,14 +13,14 @@ interface Store {
 type MyMapProps = {
   results: Store[];
   onMarkerHover: (store_id: number | null) => void;
+  hoveredMarker: number | null; // Add hoveredMarker to the props
 };
 
-const MyMap = ({ results, onMarkerHover }: MyMapProps) => {
+const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null); // 지도 엘리먼트를 참조
   const [map, setMap] = useState<any>(null); // 지도 객체 상태
-  const [markers, setMarkers] = useState<any[]>([]); // 마커 객체 상태
+  const [markers, setMarkers] = useState<{ marker: any, infowindow: any, storeId: number }[]>([]); // 마커 객체 상태
   const [infoWindow, setInfoWindow] = useState<any>(null); // 인포윈도우 객체 상태
-  const [hoveredMarker, setHoveredMarker] = useState<number | null>(null); // hover된 마커의 storeId 상태
 
   // 지도 초기화
   useEffect(() => {
@@ -45,7 +45,7 @@ const MyMap = ({ results, onMarkerHover }: MyMapProps) => {
     if (!map) return;
 
     // 기존 마커 제거
-    markers.forEach((marker) => marker.setMap(null));
+    markers.forEach((markerObj) => markerObj.marker.setMap(null));
     setMarkers([]);
 
     // 새로운 마커 추가
@@ -86,21 +86,28 @@ const MyMap = ({ results, onMarkerHover }: MyMapProps) => {
         setInfoWindow(infowindow); // 현재 인포윈도우 상태 업데이트
       });
 
-      return marker;
-    });
-    document.addEventListener("click", (event) => {
-      if (
-        event.target &&
-        !(event.target as HTMLElement).closest(".map-marker") &&
-        infoWindow
-      ) {
-        infoWindow.close();
-      }
+      return { marker, infowindow, storeId: store.store_id };
     });
 
     setMarkers(newMarkers); // 마커 상태 업데이트
-    console.log("Markers set:", newMarkers); // 디버깅용 로그 추가
-  }, [results, map, infoWindow, onMarkerHover]);
+  }, [results, map, infoWindow]);
+
+  // 마커 hover 기능 추가
+  useEffect(() => {
+    if (hoveredMarker !== null) {
+      const targetMarker = markers.find(markerObj => markerObj.storeId === hoveredMarker);
+      if (targetMarker) {
+        if (infoWindow) {
+          infoWindow.close();
+        }
+        targetMarker.infowindow.open(map, targetMarker.marker);
+        setInfoWindow(targetMarker.infowindow);
+      }
+    } else if (infoWindow) {
+      infoWindow.close();
+      setInfoWindow(null);
+    }
+  }, [hoveredMarker, markers, infoWindow, map]);
 
   // 현재 위치로 이동
   const handleCurrentLocation = () => {
@@ -115,7 +122,7 @@ const MyMap = ({ results, onMarkerHover }: MyMapProps) => {
           position: locPosition,
           map: map,
         });
-        setMarkers((prevMarkers) => [...prevMarkers, marker]); // 새로운 마커 추가
+        setMarkers((prevMarkers) => [...prevMarkers, { marker, infowindow: null, storeId: -1 }]); // 새로운 마커 추가
       });
     } else {
       alert("현재 위치를 가져올 수 없습니다.");

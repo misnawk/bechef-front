@@ -5,13 +5,12 @@ import InfoReviewComponent, {
 import axios from "axios";
 import InfoReviewEditBox from "./InfoReviewEditBox";
 import { jwtDecode } from "jwt-decode";
-import { log } from "console";
+// import { log } from "console";
 import {
-  INFO_REVEIW_UPDATE,
+  INFO_REVIEW_UPDATE, //오타
   INFO_REVIEW_DELETE,
   INFO_REVIEW_LIST,
-  INFO_UPDATE_STORE_RATING,
-} from "../../Urls/URLList";
+} from "../../../Urls/URLList";
 
 type InfoReviewListProps = {
   store_id: number;
@@ -38,7 +37,6 @@ const InfoReviewList = ({
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
-        console.log("Decoded token:", decodedToken);
         setCurrentUser(decodedToken);
       } catch (error) {
         console.error("토큰 디코딩 중 오류 발생:", error);
@@ -53,30 +51,11 @@ const InfoReviewList = ({
         headers: { Authorization: `Bearer ${token}` },
       });
       const data: InfoReviewComponentProps[] = response.data.reverse();
-      console.log("리뷰 데이터: ", data);
       setInfoReviewList(data);
     } catch (error) {
       console.error("리뷰 정보를 가져오는 중 오류 발생: ", error);
     }
   }, [store_id]);
-
-  const updateStoreRating = useCallback(
-    async (rating: number) => {
-      try {
-        const token = getToken();
-        await axios.post(
-          INFO_UPDATE_STORE_RATING(store_id),
-          { reviewRating: rating },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-      } catch (error) {
-        console.error("별점 평균 업데이트 중 오류 발생: ", error);
-      }
-    },
-    [store_id]
-  );
 
   useEffect(() => {
     fetchReview();
@@ -89,12 +68,10 @@ const InfoReviewList = ({
   const handleDeleteReview = useCallback(
     async (review_id: number) => {
       try {
-        console.log("리뷰 삭제 요청 시작:", review_id);
         const token = getToken();
         await axios.delete(INFO_REVIEW_DELETE(review_id), {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("리뷰 삭제 요청 완료");
         await fetchReview();
         await fetchAverageRating();
         alert("리뷰가 성공적으로 삭제되었습니다.");
@@ -111,10 +88,8 @@ const InfoReviewList = ({
       try {
         const token = getToken();
 
-        console.log("리뷰 수정:" + reviewId, content, rating);
-
         await axios.put(
-          INFO_REVEIW_UPDATE(reviewId),
+          INFO_REVIEW_UPDATE(reviewId), //오타
           {
             comment: content,
             reviewRating: rating,
@@ -124,7 +99,6 @@ const InfoReviewList = ({
           }
         );
         await fetchReview();
-        await updateStoreRating(rating); // 별점 업데이트 호출
         await fetchAverageRating();
         alert("리뷰가 성공적으로 수정되었습니다.");
       } catch (error) {
@@ -132,13 +106,16 @@ const InfoReviewList = ({
         alert("리뷰 수정 중 오류가 발생했습니다.");
       }
     },
-    [fetchReview, updateStoreRating, fetchAverageRating]
+    [fetchReview, fetchAverageRating]
   );
 
   return (
-    <div className="max-w-768 w-full my-0 mx-auto flex flex-col gap-px20">
+    <div className="max-w-768 w-full h-px600 overflow-y-scroll my-0 mx-auto flex flex-col gap-px20">
       {infoReviewList.map((data) => (
-        <div key={data.reviewId} className="relative flex justify-between">
+        <div
+          key={data.reviewId}
+          className="relative flex justify-between w-full"
+        >
           <InfoReviewComponent {...data} />
           {currentUser !== null && currentUser.idx === data.memberIdx && (
             <InfoReviewEditBox

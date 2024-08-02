@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import InfoPageComponent, { InfoPageComponentProps } from "./InfoPageComponent";
 import axios from "axios";
-import { INFO_PAGE } from "../../Urls/URLList";
+import { INFO_PAGE } from "../../../Urls/URLList";
 
 export type InfoPageBoxProps = {
   store_id: number; // 가게ID
@@ -14,7 +14,6 @@ const InfoPageBox = ({
   member_idx,
   averageRating,
 }: InfoPageBoxProps) => {
-  // infoPageData 상태를 선언하고 초기값을 null로 설정
   const [infoPageData, setInfoPageData] = useState<Omit<
     InfoPageComponentProps,
     "store_id" | "member_idx" | "store_rating"
@@ -41,8 +40,6 @@ const InfoPageBox = ({
   if (!infoPageData) {
     return <div>Loading...</div>;
   }
-  // console.log("infoPageData:", infoPageData);
-
   return (
     <div className="drop-shadow-lg bg-white rounded-lg">
       <InfoPageComponent
