@@ -37,6 +37,7 @@ const InfoReviewList = ({
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
+        // console.log("Decoded token:", decodedToken);
         setCurrentUser(decodedToken);
       } catch (error) {
         console.error("토큰 디코딩 중 오류 발생:", error);
@@ -51,6 +52,7 @@ const InfoReviewList = ({
         headers: { Authorization: `Bearer ${token}` },
       });
       const data: InfoReviewComponentProps[] = response.data.reverse();
+      // console.log("리뷰 데이터: ", data);
       setInfoReviewList(data);
     } catch (error) {
       console.error("리뷰 정보를 가져오는 중 오류 발생: ", error);
@@ -68,10 +70,12 @@ const InfoReviewList = ({
   const handleDeleteReview = useCallback(
     async (review_id: number) => {
       try {
+        // console.log("리뷰 삭제 요청 시작:", review_id);
         const token = getToken();
         await axios.delete(INFO_REVIEW_DELETE(review_id), {
           headers: { Authorization: `Bearer ${token}` },
         });
+        // console.log("리뷰 삭제 요청 완료");
         await fetchReview();
         await fetchAverageRating();
         alert("리뷰가 성공적으로 삭제되었습니다.");
@@ -87,7 +91,7 @@ const InfoReviewList = ({
     async (reviewId: number, content: string, rating: number) => {
       try {
         const token = getToken();
-
+        // console.log("리뷰 수정:" + reviewId, content, rating);
         await axios.put(
           INFO_REVIEW_UPDATE(reviewId), //오타
           {

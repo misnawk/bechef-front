@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import InfoMenuComponent, { InfoMenuComponentProps } from "./InfoMenuComponent";
 import axios from "axios";
-import InfoMoreViewBtn from "../../atom/InfoMoreViewBtn";
 import { INFO_MENU } from "../../../Urls/URLList";
 
 export type InfoMenuListProps = {
@@ -24,6 +23,7 @@ const InfoMenuList = ({ store_id }: InfoMenuListProps) => {
             : [], // kitIngredient가 null이면 빈 배열로 처리
           kitAllergies: item.kitAllergies ? item.kitAllergies.split(", ") : [], // kitAllergies가 null이면 빈 배열로 처리
         }));
+        //console.log("메뉴데이터:", data);
         setInfoMenuList(data);
       } catch (error) {
         console.error("Error fetching menu data", error);

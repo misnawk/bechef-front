@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import InfoEditBtn from "../../atom/InfoEditBtn";
 import InfoReviewStarComponent from "./InfoReviewStarComponent";
 
 type InfoReviewEditProps = {

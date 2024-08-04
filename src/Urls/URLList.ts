@@ -1,7 +1,7 @@
 import { Kit } from "../admin/atom/Kit/Kit";
 
 const DOMAIN = `http://localhost:8081`; // test용 url
-// const SERVER_URL = `https://finalbechefback-d9ewh5bbfnbubtes.koreacentral-01.azurewebsites.net`; // 배포 url
+// const SERVER_URL = `https://bechefback-bda4fddea6hxcpda.koreacentral-01.azurewebsites.net`; // 배포 url
 const API_URL = `${DOMAIN}/api`;
 const ADMIN_URL = `${DOMAIN}/api/admin`;
 const INFO_URL = `${DOMAIN}/api/info`;
@@ -39,7 +39,9 @@ export const INFO_REVIEW_INPUT = () => `${INFO_URL}/review_input`;
 export const INFO_REVIEW_DELETE = (review_id: number) =>
   `${INFO_URL}/review_delete/${review_id}`;
 export const INFO_REVIEW_UPDATE = (reviewId: number) =>
-  `${INFO_URL}/review_update/${reviewId}`; //오타
+  `${INFO_URL}/review_update/${reviewId}`;
+export const INFO_UPDATE_STORE_RATING = (store_id: number) =>
+  `${INFO_URL}/upate_store_rating/${store_id}`;
 export const INFO_AVERAGE_RATING = (store_id: number) =>
   `${INFO_URL}/average_rating/${store_id}`;
 
