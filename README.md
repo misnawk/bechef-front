@@ -1,6 +1,6 @@
 # BECHEF
 
-#밀키트 판매 매장 검색 사이트
+# 밀키트 판매 매장 검색 사이트
 ![readme](https://github.com/user-attachments/assets/e881fbcf-2e9a-4888-a4f3-c691c7798d86)
 
 ## Available Scripts
