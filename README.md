@@ -4,9 +4,8 @@
 
 ![readme](https://github.com/user-attachments/assets/e881fbcf-2e9a-4888-a4f3-c691c7798d86)
 
-## 프로젝트 정보
 
-- 배포 URL: [사이트 링크](https://delightful-meadow-09cec9100.5.azurestaticapps.net)
+- 배포 URL: https://gentle-field-017139e00.5.azurestaticapps.net
 - Admin ID: admin
 - Admin PWD: admin1111
 
