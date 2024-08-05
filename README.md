@@ -10,44 +10,46 @@
 - Admin PWD: admin1111
 
 
+## 주요 기능
 
+- 사용자 위치 기반 밀키트 판매점 검색
+- 개인 경험 리뷰 및 평점 기능
 
-### `npm start`
+## 기술 스택
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Frontend
+- React
+- HTML
+- TailwindCSS
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Backend
+- Java
+- Spring Boot
+- JWT
+- Spring Security
 
-### `npm test`
+### Database
+- MySQL
+- Dbeaver
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 협업 도구
+- Notion
+- GitHub
 
-### `npm run build`
+### 배포
+- Azure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 팀원
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 김용현
+- 강민석
+- 오승록
+- 이지원
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 개발 기간
 
-### `npm run eject`
+2024.06.20 ~ 2024.08.06
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 프로젝트 목표
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-# bechef_Front
+온라인 밀키트 사이트 전문점에서 주문시 자신에게 도달하기까지의 시간이 걸리지만 이 사이트를 이용하여 자신의 위치에서 가까운 밀키트 판매점을 검색하여 바로 구매가 가능하게 하려는 목적을 가지고 이 사이트를 만들었습니다.
