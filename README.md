@@ -73,11 +73,11 @@
 5. 리뷰와 찜 리스트에서 원하는 것을 클릭하면 해당 매장으로 이동합니다.
 
 ### 메인 페이지화면
-![메인 페이지 검색 결과]![메인화면(1)](https://github.com/user-attachments/assets/b846fb2a-d7f4-4711-b3c6-4d42e8a5b291)
+(https://github.com/user-attachments/assets/b846fb2a-d7f4-4711-b3c6-4d42e8a5b291)
 
 
 ### 매장 상세 정보
-![매장 상세 정보](![리뷰와 찜리스트(2)](https://github.com/user-attachments/assets/770c4fca-ccd2-4650-8bdc-5167e13d21f3)
+(https://github.com/user-attachments/assets/770c4fca-ccd2-4650-8bdc-5167e13d21f3)
 
 
 ---
