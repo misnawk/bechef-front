@@ -123,7 +123,7 @@
 ## 리뷰수정 화면
 ![리뷰수정(11)](https://github.com/user-attachments/assets/e27ccb87-7587-4952-af40-03fadd37ae87)
 - 리뷰 수정
-- 
+  
 ## 리뷰삭제 화면
 ![리뷰삭제(12)](https://github.com/user-attachments/assets/6a2e4c6d-e2e3-4ca1-aff4-7122d0104d01)
 - 리뷰 삭제
