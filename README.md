@@ -72,13 +72,13 @@
 4. 로그인 후 마이페이지 버튼을 누르면 리뷰와 찜 기록이 나타납니다.
 5. 리뷰와 찜 리스트에서 원하는 것을 클릭하면 해당 매장으로 이동합니다.
 
-### 메인 페이지화면
-(https://github.com/user-attachments/assets/b846fb2a-d7f4-4711-b3c6-4d42e8a5b291)
+## 프로젝트 페이지별 기능
 
+### 메인 페이지화면
+![메인 페이지](https://github.com/user-attachments/assets/b846fb2a-d7f4-4711-b3c6-4d42e8a5b291)
 
 ### 매장 상세 정보
-(https://github.com/user-attachments/assets/770c4fca-ccd2-4650-8bdc-5167e13d21f3)
-
+![매장 상세 정보](https://github.com/user-attachments/assets/770c4fca-ccd2-4650-8bdc-5167e13d21f3)
 
 ---
 
