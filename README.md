@@ -88,8 +88,36 @@
 ![지도 보기](https://github.com/user-attachments/assets/8dba85d6-b2ed-4c0b-9325-0537f589d125)
 - 현재 위치 버튼을 누르게 되면 자신의 위치를 반영해 지도가 이동하며 마커로 표시해줍니다.
 - 마우스 휠, 확대, 축소버튼으로 지도의 확대 축소가 가능합니다.
-- 회원탈퇴 버튼 클릭시 알림창으로 한번 더 확인후 진행합니다.
+
 
 ## 회원 탈퇴
 ![회원 탈퇴](https://github.com/user-attachments/assets/f020cb70-68c7-44aa-88d6-bc2f2d3db3e3)
+- 회원탈퇴 버튼 클릭시 알림창으로 한번 더 확인후 진행합니다.
+
+
+## 회원가입 페이지 화면
+![회원가입](https://github.com/user-attachments/assets/8ce83c1c-736d-4c7a-b58c-817ebadca7d7)
+- 회원가입시 유효성 검사를 통해 회원가입을 진행합니다.
+- 회원가입시 springSecurity 에서 제공하는 BCryptPasswordEncoder 를사용하여 PW가 암호화됩니다.
+
+## 로그인 페이지 화면
+![로그인](https://github.com/user-attachments/assets/0a6e43e2-4031-4424-8ef8-54a0ee879df8)
+- 프론트에서는 서버에게 
+- 서버는 암호화된 PW를 비밀키를 사용해서 검증합니다. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
