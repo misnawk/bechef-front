@@ -7,7 +7,7 @@ const ADMIN_URL = `${SERVER_URL}/api/admin`;
 const INFO_URL = `${SERVER_URL}/api/info`;
 const MEMBER_URL = `${SERVER_URL}/bechef/member`;
 
-// map 페이지 검색 결과
+// map 페이지 검색 결과 --
 export const MAP_SEARCH = (query: string) =>
   `${SERVER_URL}/bechef/search?query=${query}`;
 
