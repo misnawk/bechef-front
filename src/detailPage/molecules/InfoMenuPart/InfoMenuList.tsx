@@ -35,7 +35,7 @@ const InfoMenuList = ({ store_id }: InfoMenuListProps) => {
 
   return (
     <div className="max-w-768 w-full my-0 mx-auto">
-      <div className="max-w-768 w-full my-0 mx-auto h-px1040 overflow-y-scroll overflow-x-hidden flex flex-col gap-px20">
+      <div className="max-w-768 w-full my-0 mx-auto h-px1040 overflow-y-scroll flex flex-col gap-px20">
         {infoMenuList.map((data, index: number) => (
           <InfoMenuComponent key={index} {...data} />
         ))}

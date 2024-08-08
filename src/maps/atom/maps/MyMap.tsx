@@ -1,14 +1,17 @@
+import { click } from "@testing-library/user-event/dist/click";
 import React, { useEffect, useRef, useState } from "react";
 import { BiTargetLock } from "react-icons/bi";
+import Title from "../../../admin/atom/Navigation/NavTitle";
+import { Navigate, useNavigate } from "react-router-dom";
 
 // Store 인터페이스 정의
-interface Store {
+type Store = {
   store_id: number;
   store_name: string;
   store_address: string;
   store_latitude: number;
   store_longitude: number;
-}
+};
 
 type MyMapProps = {
   results: Store[];
@@ -17,6 +20,7 @@ type MyMapProps = {
 };
 
 const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
+  const navigate = useNavigate();
   const mapRef = useRef<HTMLDivElement>(null); // 지도를 표시할 HTML 엘리먼트를 참조
   const [map, setMap] = useState<any>(null); // 지도 객체 상태
   const [markers, setMarkers] = useState<
@@ -26,6 +30,7 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
   // 지도 초기화
   useEffect(() => {
     const { kakao } = window as any; // 카카오 지도 API를 window 객체에서 가져옴
+
     if (!kakao) return;
 
     const container = mapRef.current; // 지도를 표시할 HTML 엘리먼트
@@ -44,7 +49,6 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
   // 마커와 인포윈도우 설정 및 지도 이동
   useEffect(() => {
     if (!map) return;
-
     // 기존 마커 제거
     markers.forEach((markerObj) => markerObj.marker.setMap(null)); // 기존 마커를 지도에서 제거
     setMarkers([]); // 마커 상태 초기화
@@ -61,21 +65,52 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
         title: store.store_name,
       });
 
+      const infowindowContent = `
+      <div style="padding:5px; width:300px;">
+        <div style="font-size:18px; font-weight: 700;">${store.store_name}</div>
+        <div style="font-size:14px;">${store.store_address}</div>
+        <button id="infowindow-button-${store.store_id}" style="cursor:pointer; padding:5px; background-color:#007bff; color:white; border:none; margin-top:10px; width:100%;">
+          상세 정보 보기
+        </button>
+      </div>
+    `;
+
       const infowindow = new kakao.maps.InfoWindow({
-        content: `<div style="padding:5px; display:flex; flex-direction: column; gap:1; width:300px">
-            <div style="font-size:18px; font-weight: 700;">${store.store_name}</div>
-            <div>
-              <span style="font-size:14px;">${store.store_address}</span><br/>
-            </div>
-        </div>`, // 인포윈도우 내용 설정
-        zIndex: 10, // z-index 설정
+        content: infowindowContent,
+        zIndex: 10,
+        removable: true,
       });
 
       // 마커 클릭 이벤트 설정
       kakao.maps.event.addListener(marker, "click", () => {
         newMarkers.forEach(({ infowindow }) => infowindow.close()); // 모든 인포윈도우 닫기
-        infowindow.open(map, marker); // 현재 마커의 인포윈도우 열기
+
+        infowindow.open(map, marker);
+
+        setTimeout(() => {
+          const button = document.getElementById(
+            `infowindow-button-${store.store_id}`
+          );
+          if (button) {
+            // 기존 이벤트 리스너 제거 (중복 방지)
+            button.removeEventListener("click", handleButtonClick);
+            // 새 이벤트 리스너 추가
+            button.addEventListener("click", handleButtonClick);
+          }
+        }, 0);
       });
+
+      // 버튼 클릭 핸들러 함수
+      function handleButtonClick() {
+        console.log("Store Data:", {
+          id: store.store_id,
+          name: store.store_name,
+          address: store.store_address,
+          latitude: store.store_latitude,
+          longitude: store.store_longitude,
+        });
+        navigate(`/information/${store.store_id}`);
+      }
 
       // 첫 번째 결과의 위치로 지도의 중심을 이동
       if (index === 0) {

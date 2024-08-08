@@ -47,8 +47,6 @@ const Search = ({ setResults, onMarkerHover }: SearchProps) => {
     }
   };
 
-  
-
   return (
     <div className="bg-npLG w-px415 flex flex-col h-full">
       <HeaderSection />
@@ -60,7 +58,11 @@ const Search = ({ setResults, onMarkerHover }: SearchProps) => {
           handleKeyPress={handleKeyPress}
         />
         <SortBtn setSortOption={handleSort} />
-        <SearchResults results={results} onMarkerHover={onMarkerHover} ref={resultsContainerRef}  />
+        <SearchResults
+          results={results}
+          onMarkerHover={onMarkerHover}
+          ref={resultsContainerRef}
+        />
       </div>
     </div>
   );

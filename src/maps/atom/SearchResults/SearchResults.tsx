@@ -1,4 +1,7 @@
 import React, { forwardRef } from "react";
+
+import MapInfoBtn from "../Button/MapInfoBtn";
+
 import { useNavigate } from "react-router-dom";
 import InfoSetStar from "../../../detailPage/atom/InfoSetStar";
 
@@ -71,7 +74,5 @@ const SearchResults = forwardRef<HTMLUListElement, SearchResultsProps>(
     );
   }
 );
-
 SearchResults.displayName = "SearchResults";
-
 export default SearchResults;

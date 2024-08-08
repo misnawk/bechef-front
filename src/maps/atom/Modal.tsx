@@ -47,12 +47,13 @@ const Modal = ({ showModal, closeModal, onLogout }: ModalProps) => {
 
       const decodedToken = jwtDecode<JwtPayload>(token);
       const idx = decodedToken.idx;
+      // console.log("Decoded memberIdx:", idx); // 디버깅을 위해 콘솔에 출력
 
       const favoritesResponse = await axios.get(MAP_MODAL_FAVORITE(idx), {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFavorites(favoritesResponse.data);
-
+      // review 불러오기
       const reviewsResponse = await axios.get(MAP_MODAL_REVIEW(idx), {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -72,6 +73,7 @@ const Modal = ({ showModal, closeModal, onLogout }: ModalProps) => {
       if (!token) {
         throw new Error("로그인이 필요합니다.");
       }
+      //console.log("JWT Token for account deletion:", token);
 
       const response = await axios.delete(MAP_DELETE_ACCOUNT(), {
         headers: {
@@ -80,6 +82,7 @@ const Modal = ({ showModal, closeModal, onLogout }: ModalProps) => {
       });
 
       if (response.status === 200) {
+        console.log("Account Deleted");
         alert("탈퇴가 완료되었습니다.");
         closeModal();
         localStorage.removeItem("jwt-token");
