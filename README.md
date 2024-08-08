@@ -91,17 +91,17 @@
 
 
 ## 회원 탈퇴 화면
-![회원 탈퇴](https://github.com/user-attachments/assets/f020cb70-68c7-44aa-88d6-bc2f2d3db3e3)
+![회원탈퇴(4)](https://github.com/user-attachments/assets/31403b40-3c8c-42d5-98b2-bda1edc68102)
 - 회원탈퇴 버튼 클릭시 알림창으로 한번 더 확인후 진행합니다.
 
 
 ## 회원가입 페이지 화면
-![회원가입](https://github.com/user-attachments/assets/8ce83c1c-736d-4c7a-b58c-817ebadca7d7)
+![회원가입(6)](https://github.com/user-attachments/assets/e1e0d16a-975f-42f6-82a8-6587a26242b1)
 - 회원가입시 유효성 검사를 통해 회원가입을 진행합니다.
 - 회원가입시 springSecurity 에서 제공하는 BCryptPasswordEncoder 를사용하여 PW가 암호화됩니다.
 
 ## 로그인 페이지 화면
-![로그인](https://github.com/user-attachments/assets/0a6e43e2-4031-4424-8ef8-54a0ee879df8)
+![로그인(5)](https://github.com/user-attachments/assets/7ac603aa-d5e2-4c08-8c66-e6dc78e07417)
 - 프론트에서는 서버에게 
 - 서버는 암호화된 PW를 비밀키를 사용해서 검증합니다. 
 
