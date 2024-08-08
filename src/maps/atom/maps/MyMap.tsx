@@ -4,7 +4,7 @@ import { BiTargetLock } from "react-icons/bi";
 import Title from "../../../admin/atom/Navigation/NavTitle";
 import { Navigate, useNavigate } from "react-router-dom";
 
-// Store 인터페이스 정의
+// 가게 정보 타입 정의
 type Store = {
   store_id: number;
   store_name: string;
@@ -13,47 +13,48 @@ type Store = {
   store_longitude: number;
 };
 
+// MyMap 컴포넌트 props 타입 정의
 type MyMapProps = {
-  results: Store[];
-  onMarkerHover: (store_id: number | null) => void;
-  hoveredMarker: number | null; // hover된 마커의 storeId 상태
+  results: Store[]; // 가게 목록
+  onMarkerHover: (store_id: number | null) => void; // 마커 호버 시 호출될 함수
+  hoveredMarker: number | null; // 현재 호버된 마커의 ID
 };
 
 const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
-  const navigate = useNavigate();
-  const mapRef = useRef<HTMLDivElement>(null); // 지도를 표시할 HTML 엘리먼트를 참조
+  const navigate = useNavigate(); // 페이지 이동을 위한 hook
+  const mapRef = useRef<HTMLDivElement>(null); // 지도 컨테이너 ref
   const [map, setMap] = useState<any>(null); // 지도 객체 상태
   const [markers, setMarkers] = useState<
     { marker: any; infowindow: any; storeId: number }[]
-  >([]); // 마커 객체 상태
+  >([]); // 마커 상태
 
   // 지도 초기화
   useEffect(() => {
-    const { kakao } = window as any; // 카카오 지도 API를 window 객체에서 가져옴
-
+    const { kakao } = window as any; // 카카오맵 API 가져오기
     if (!kakao) return;
 
-    const container = mapRef.current; // 지도를 표시할 HTML 엘리먼트
+    const container = mapRef.current;
     const options = {
-      center: new kakao.maps.LatLng(37.489457, 126.7223953), // 지도 중심 좌표 설정
-      level: 5, // 지도 확대 레벨 설정
+      center: new kakao.maps.LatLng(37.489457, 126.7223953), // 초기 중심 좌표
+      level: 5, // 초기 줌 레벨
     };
     const mapInstance = new kakao.maps.Map(container, options); // 지도 생성
-    setMap(mapInstance); // 지도 객체 상태 설정
+    setMap(mapInstance);
 
-    // 지도 확대/축소 컨트롤 추가
+    // 줌 컨트롤 추가
     const zoomControl = new kakao.maps.ZoomControl();
     mapInstance.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
   }, []);
 
-  // 마커와 인포윈도우 설정 및 지도 이동
+  // 마커와 인포윈도우 설정
   useEffect(() => {
     if (!map) return;
-    // 기존 마커 제거
-    markers.forEach((markerObj) => markerObj.marker.setMap(null)); // 기존 마커를 지도에서 제거
-    setMarkers([]); // 마커 상태 초기화
 
-    // 새로운 마커 추가 및 지도 중심 이동
+    // 기존 마커 제거
+    markers.forEach((markerObj) => markerObj.marker.setMap(null));
+    setMarkers([]);
+
+    // 새 마커 생성 및 설정
     const newMarkers = results.map((store, index) => {
       const position = new kakao.maps.LatLng(
         store.store_latitude,
@@ -65,46 +66,45 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
         title: store.store_name,
       });
 
+      // 인포윈도우 내용 생성
       const infowindowContent = `
-      <div style="padding:5px; width:300px;">
-        <div style="font-size:18px; font-weight: 700;">${store.store_name}</div>
-        <div style="font-size:14px;">${store.store_address}</div>
-        <a href="/information/${store.store_id}" 
-           id="infowindow-link-${store.store_id}" 
-           target="_blank"
-           rel="noopener noreferrer"
-           style="display:inline-block; cursor:pointer; padding:5px; background-color:#007bff; color:white; text-decoration:none; margin-top:10px; width:100%; text-align:center;">
-          상세 정보 보기
-        </a>
-      </div>
-    `;
-
+       <div style="padding:5px; width:300px;">
+         <div style="font-size:18px; font-weight: 700;">${store.store_name}</div>
+         <div style="font-size:14px;">${store.store_address}</div>
+         <a href="/information/${store.store_id}" 
+            id="infowindow-link-${store.store_id}" 
+            target="_blank"
+            rel="noopener noreferrer"
+            style="display:inline-block; cursor:pointer; padding:5px; background-color:#007bff; color:white; text-decoration:none; margin-top:10px; width:100%; text-align:center;">
+           상세 정보 보기
+         </a>
+       </div>
+     `;
+      // 인포윈도우 객체 생성
       const infowindow = new kakao.maps.InfoWindow({
-        content: infowindowContent,
-        zIndex: 10,
-        removable: true,
+        content: infowindowContent, // 위에서 만든 HTML 내용을 인포윈도우 내용으로 설정
+        zIndex: 10, // 인포윈도우의 z-index 설정
+        removable: true, // 닫기 버튼 표시 여부
       });
 
       // 마커 클릭 이벤트 설정
       kakao.maps.event.addListener(marker, "click", () => {
         newMarkers.forEach(({ infowindow }) => infowindow.close()); // 모든 인포윈도우 닫기
+        infowindow.open(map, marker); // 클릭한 마커의 인포윈도우 열기
 
-        infowindow.open(map, marker);
-
+        // 버튼 클릭 이벤트 설정
         setTimeout(() => {
           const button = document.getElementById(
             `infowindow-button-${store.store_id}`
           );
           if (button) {
-            // 기존 이벤트 리스너 제거 (중복 방지)
             button.removeEventListener("click", handleButtonClick);
-            // 새 이벤트 리스너 추가
             button.addEventListener("click", handleButtonClick);
           }
         }, 0);
       });
 
-      // 버튼 클릭 핸들러 함수
+      // 버튼 클릭 핸들러
       function handleButtonClick() {
         console.log("Store Data:", {
           id: store.store_id,
@@ -113,26 +113,26 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
           latitude: store.store_latitude,
           longitude: store.store_longitude,
         });
-        navigate(`/information/${store.store_id}`);
+        navigate(`/information/${store.store_id}`); // 상세 정보 페이지로 이동
       }
 
-      // 첫 번째 결과의 위치로 지도의 중심을 이동
+      // 첫 번째 결과로 지도 중심 이동
       if (index === 0) {
-        map.setCenter(position); // 첫 번째 결과의 위치로 지도의 중심을 이동
+        map.setCenter(position);
       }
 
       return { marker, infowindow, storeId: store.store_id };
     });
 
-    setMarkers(newMarkers); // 마커 상태 업데이트
+    setMarkers(newMarkers);
 
-    // 맵 클릭 이벤트 설정
+    // 지도 클릭 시 모든 인포윈도우 닫기
     kakao.maps.event.addListener(map, "click", () => {
-      newMarkers.forEach(({ infowindow }) => infowindow.close()); // 모든 인포윈도우 닫기
+      newMarkers.forEach(({ infowindow }) => infowindow.close());
     });
   }, [results, map]);
 
-  // 마커 hover 기능 추가
+  // 마커 호버 기능
   useEffect(() => {
     if (hoveredMarker !== null) {
       const targetMarker = markers.find(
@@ -140,22 +140,23 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
       );
       if (targetMarker) {
         markers.forEach(({ infowindow }) => infowindow.close()); // 모든 인포윈도우 닫기
-        targetMarker.infowindow.open(map, targetMarker.marker); // 해당 마커의 인포윈도우 열기
+        targetMarker.infowindow.open(map, targetMarker.marker); // 호버된 마커의 인포윈도우 열기
       }
     } else {
       markers.forEach(({ infowindow }) => infowindow.close()); // 모든 인포윈도우 닫기
     }
   }, [hoveredMarker, markers, map]);
 
-  // 현재 위치로 이동
+  // 현재 위치로 이동 함수
   const handleCurrentLocation = () => {
     const { kakao } = window as any;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        const locPosition = new kakao.maps.LatLng(latitude, longitude); // 현재 위치로 이동
-        map.setCenter(locPosition);
+        const locPosition = new kakao.maps.LatLng(latitude, longitude);
+        map.setCenter(locPosition); // 현재 위치로 지도 중심 이동
 
+        // 현재 위치에 마커 추가
         const marker = new kakao.maps.Marker({
           position: locPosition,
           map: map,
@@ -163,19 +164,20 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
         setMarkers((prevMarkers) => [
           ...prevMarkers,
           { marker, infowindow: null, storeId: -1 },
-        ]); // 새로운 마커 추가
+        ]);
       });
     } else {
-      alert("현재 위치를 가져올 수 없습니다."); // 위치 정보를 가져올 수 없을 때 경고창 표시
+      alert("현재 위치를 가져올 수 없습니다.");
     }
   };
 
+  // 컴포넌트 렌더링
   return (
     <div className="relative h-full w-full">
       <div ref={mapRef} className="h-full w-full"></div>
       <button
         className="absolute top-48 right-0 bg-white p-2 rounded-full flex items-center justify-center z-50"
-        onClick={handleCurrentLocation} // 현재 위치로 이동하는 기능
+        onClick={handleCurrentLocation} // 현재 위치로 이동 버튼
       >
         <BiTargetLock className="text-black text-2xl" />
       </button>
