@@ -69,9 +69,13 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
       <div style="padding:5px; width:300px;">
         <div style="font-size:18px; font-weight: 700;">${store.store_name}</div>
         <div style="font-size:14px;">${store.store_address}</div>
-        <button id="infowindow-button-${store.store_id}" style="cursor:pointer; padding:5px; background-color:#007bff; color:white; border:none; margin-top:10px; width:100%;">
+        <a href="/information/${store.store_id}" 
+           id="infowindow-link-${store.store_id}" 
+           target="_blank"
+           rel="noopener noreferrer"
+           style="display:inline-block; cursor:pointer; padding:5px; background-color:#007bff; color:white; text-decoration:none; margin-top:10px; width:100%; text-align:center;">
           상세 정보 보기
-        </button>
+        </a>
       </div>
     `;
 
