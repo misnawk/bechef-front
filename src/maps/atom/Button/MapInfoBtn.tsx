@@ -7,6 +7,7 @@ type MapInfoBtnProps = {
 };
 
 const MapInfoBtn = ({ store_id, user_id, content }: MapInfoBtnProps) => {
+
   const linkTo = user_id
     ? `/information/${store_id}?userId=${user_id}`
     : `/information/${store_id}`;

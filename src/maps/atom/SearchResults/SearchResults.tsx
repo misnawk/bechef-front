@@ -36,7 +36,7 @@ const SearchResults = forwardRef<HTMLUListElement, SearchResultsProps>(
 
     // 매장 이동
     const handleListClick = (storeId: number) => {
-      navigate(`/information/${storeId}`);
+      window.open(`/information/${storeId}`, "_blank");
     };
 
     return (
