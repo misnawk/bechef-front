@@ -1,15 +1,15 @@
 import { Kit } from "../admin/atom/Kit/Kit";
 
-const DOMAIN = `http://localhost:8081`; // test용 url
-// const SERVER_URL = `https://bechef-back-cefjaafzd8grb0hz.koreacentral-01.azurewebsites.net`; // 배포 url
-const API_URL = `${DOMAIN}/api`;
-const ADMIN_URL = `${DOMAIN}/api/admin`;
-const INFO_URL = `${DOMAIN}/api/info`;
-const MEMBER_URL = `${DOMAIN}/bechef/member`;
+// const DOMAIN = `http://localhost:8081`; // test용 url
+const SERVER_URL = `https://bechef-back-cefjaafzd8grb0hz.koreacentral-01.azurewebsites.net`; // 배포 url
+const API_URL = `${SERVER_URL}/api`;
+const ADMIN_URL = `${SERVER_URL}/api/admin`;
+const INFO_URL = `${SERVER_URL}/api/info`;
+const MEMBER_URL = `${SERVER_URL}/bechef/member`;
 
 // map 페이지 검색 결과 --
 export const MAP_SEARCH = (query: string) =>
-  `${DOMAIN}/bechef/search?query=${query}`;
+  `${SERVER_URL}/bechef/search?query=${query}`;
 
 // ADMIN 페이지
 export const ADMIN_UPDATE_QUANTITY = (kit: Kit) =>

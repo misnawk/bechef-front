@@ -24,7 +24,7 @@ type SearchResultsProps = {
 
 const SearchResults = forwardRef<HTMLUListElement, SearchResultsProps>(
   ({ results, user_id, onMarkerHover }: SearchResultsProps, ref) => {
-    const navigate = useNavigate(); // navigate
+    const navigate = useNavigate(); //
 
     if (results.length === 0) {
       return <div className="p-3">검색 결과가 없습니다.</div>;
