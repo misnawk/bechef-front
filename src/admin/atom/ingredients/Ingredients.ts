@@ -1,8 +1,10 @@
+//재료들의 타입을 지정
 export type Ingredient = {
   id: string;
   name: string;
 };
 
+// 재료들의 목록을 배열로 지정해주었다.
 export const ingredients: Ingredient[] = [
   { id: "1", name: "버섯" },
   { id: "2", name: "베이컨" },

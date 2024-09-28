@@ -13,7 +13,9 @@ const MapPage = () => {
 
   return (
     <div className="flex h-screen gap-1 ">
+      {/* 사이드 */}
       <Search setResults={setResults} onMarkerHover={handleMarkerHover} />
+      {/* 지도 */}
       <div className="flex-grow">
         <MyMap
           results={results}

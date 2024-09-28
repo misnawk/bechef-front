@@ -1,5 +1,6 @@
 import React from "react";
 
+// 키트의 이미지를 보여주는 타입을 지정
 type ImageProps = {
   src: string;
   alt: string;

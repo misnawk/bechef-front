@@ -6,10 +6,10 @@ import SearchResults, { Store } from "../../atom/SearchResults/SearchResults";
 import SortBtn from "../../molecules/sortBtn/SortBtn";
 import { MAP_SEARCH } from "../../../Urls/URLList";
 
-interface SearchProps {
+type SearchProps = {
   setResults: React.Dispatch<React.SetStateAction<Store[]>>;
   onMarkerHover: (storeId: number | null) => void;
-}
+};
 
 const Search = ({ setResults, onMarkerHover }: SearchProps) => {
   const [query, setQuery] = useState("");
