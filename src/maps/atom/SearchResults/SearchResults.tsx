@@ -6,16 +6,17 @@ import { useNavigate } from "react-router-dom";
 import InfoSetStar from "../../../detailPage/atom/InfoSetStar";
 
 export type Store = {
-  store_id: number;
-  store_name: string;
-  store_address: string;
-  store_latitude: number;
-  store_longitude: number;
-  store_rating: number;
-  reviewCount: number;
-  img: string;
+  store_id: number; //가게의 ID
+  store_name: string; // 가게의 이름
+  store_address: string; // 가게 주소
+  store_latitude: number; // 가게 x축
+  store_longitude: number; //가게 y축
+  store_rating: number; // 가게 별점
+  reviewCount: number; // 리뷰 수
+  img: string; //이미지
 };
 
+// 검색결과 바의 프롭스 정의
 type SearchResultsProps = {
   results: Store[];
   user_id?: number;
@@ -23,9 +24,7 @@ type SearchResultsProps = {
 };
 
 const SearchResults = forwardRef<HTMLUListElement, SearchResultsProps>(
-  ({ results, user_id, onMarkerHover }: SearchResultsProps, ref) => {
-    const navigate = useNavigate(); //
-
+  ({ results, onMarkerHover }: SearchResultsProps, ref) => {
     if (results.length === 0) {
       return <div className="p-3">검색 결과가 없습니다.</div>;
     }

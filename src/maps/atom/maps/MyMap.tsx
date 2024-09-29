@@ -33,7 +33,7 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
     const { kakao } = window as any; // 카카오맵 API 가져오기
     if (!kakao) return;
 
-    const container = mapRef.current;
+    const container = mapRef.current; // 카카오맵을 그릴 div요소를 가져온다.
     const options = {
       center: new kakao.maps.LatLng(37.489457, 126.7223953), // 초기 중심 좌표
       level: 5, // 초기 줌 레벨
@@ -43,6 +43,8 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
 
     // 줌 컨트롤 추가
     const zoomControl = new kakao.maps.ZoomControl();
+
+    // 지도의 컨트롤러를 오른쪽에 배치
     mapInstance.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
   }, []);
 
@@ -57,13 +59,15 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
     // 새 마커 생성 및 설정
     const newMarkers = results.map((store, index) => {
       const position = new kakao.maps.LatLng(
-        store.store_latitude,
-        store.store_longitude
+        store.store_latitude, //매장의 위도
+        store.store_longitude //매장의 경도
       );
+
+      // 각 매장에 대한 마커 객체 생성
       const marker = new kakao.maps.Marker({
-        map: map,
-        position: position,
-        title: store.store_name,
+        map: map, //마커를 표시할 지도 객체
+        position: position, //마커의 위치
+        title: store.store_name, // 마커의 타이틀
       });
 
       // 인포윈도우 내용 생성
@@ -80,6 +84,7 @@ const MyMap = ({ results, onMarkerHover, hoveredMarker }: MyMapProps) => {
          </a>
        </div>
      `;
+     
       // 인포윈도우 객체 생성
       const infowindow = new kakao.maps.InfoWindow({
         content: infowindowContent, // 위에서 만든 HTML 내용을 인포윈도우 내용으로 설정
